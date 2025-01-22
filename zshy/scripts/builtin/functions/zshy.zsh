@@ -1,11 +1,11 @@
 #!/usr/bin/env zsh
 
-function zx() {
+function zshy() {
 	case $1 in
-	r | run)
+	run)
     if [[ $ZSHY_EXT_DIR == "" ]]; then
       echo "Cannot run any extension."
-      __zx_usage show_extensions_dir_creation_help
+      __zshy_usage show_extensions_dir_creation_help
       return 1
     fi
 
@@ -13,13 +13,13 @@ function zx() {
 		local funcdirpath
 		local funcfilepath
 		if [[ $# -eq 0 ]]; then
-			debugmsg "zx r got no args"
-			__zx_usage "$0" "$1"
+			debugmsg "zshy r got no args"
+			__zshy_usage "$0" "$1"
 			return
 		fi
 
-		funcdirpath="$ZEXT_INSTALL_DIR/installed/extensions/$1"
-		funcfilepath="$ZEXT_INSTALL_DIR/installed/extensions/$1/$1.zsh"
+		funcdirpath="$ZSHY_EXT_HOME/installed/extensions/$1"
+		funcfilepath="$ZSHY_EXT_HOME/installed/extensions/$1/$1.zsh"
 
 		# Check that the directory exists
 		if [ -e "$funcdirpath" ]; then
@@ -62,10 +62,10 @@ function zx() {
 			return 5
 		fi
 		;;
-	i | install)
+	install)
     if [[ $ZSHY_EXT_DIR == "" ]]; then
       echo "Cannot install any extension."
-      __zx_usage show_extensions_dir_creation_help
+      __zshy_usage show_extensions_dir_creation_help
       return 1
     fi
 
@@ -74,11 +74,11 @@ function zx() {
 		if [ -z "$1" ]; then
 			echo "Supply git repo address please"
 		else
-			echo "Install directory is: $ZEXT_INSTALL_DIR"
-			echo "going to run 'git clone $1' in $ZEXT_INSTALL_DIR/installed/extensions"
+			echo "Install directory is: $ZSHY_EXT_HOME"
+			echo "going to run 'git clone $1' in $ZSHY_EXT_HOME/installed/extensions"
 
 			curr_dir=$(pwd)
-			cd $ZEXT_INSTALL_DIR/installed/extensions
+			cd $ZSHY_EXT_HOME/installed/extensions
 			git clone $1
 			if [[ $? -ne 0 ]]; then
 				echo "looks like that failed"
@@ -92,20 +92,20 @@ function zx() {
 			echo ""
 
 			if [[ $choice == "y" || $choice == "Y" ]]; then
-				cd $ZEXT_INSTALL_DIR/installed/extensions
+				cd $ZSHY_EXT_HOME/installed/extensions
 				pr green "You should now 'cd' to the newly created directory and run 'rm -rf .git' there."
 				return 0
 			else
 				echo "You chose not to delete the .git directory from the newly created directory."
-				echo "If you do want to do that, remember the function are located here: $ZEXT_INSTALL_DIR/installed/extensions"
+				echo "If you do want to do that, remember the function are located here: $ZSHY_EXT_HOME/installed/extensions"
 				cd $curr_dir
 			fi
 		fi
 		;; 
-	c | check)
+	check)
     if [[ $ZSHY_EXT_DIR == "" ]]; then
       echo "Cannot check for extension's existence!!"
-      __zx_usage show_extensions_dir_creation_help
+      __zshy_usage show_extensions_dir_creation_help
       return 1
     fi
 
@@ -113,13 +113,13 @@ function zx() {
 		local funcdirpath
 		local funcfilepath
 		if [[ $# -eq 0 ]]; then
-			debugmsg "zx c got no args"
-			__zx_usage "$0" "$1"
+			debugmsg "zshy c got no args"
+			__zshy_usage "$0" "$1"
 			return
 		fi
 
-		funcdirpath="$ZEXT_INSTALL_DIR/installed/extensions/$1"
-		funcfilepath="$ZEXT_INSTALL_DIR/installed/extensions/$1/$1.zsh"
+		funcdirpath="$ZSHY_EXT_HOME/installed/extensions/$1"
+		funcfilepath="$ZSHY_EXT_HOME/installed/extensions/$1/$1.zsh"
 		# Check that the directory exists
 		if [ -e "$funcdirpath" ]; then
 		  # Must not be a symbolic link
@@ -149,7 +149,7 @@ function zx() {
 
 }
 
-function __zx_usage() {
+function __zshy_usage() {
 	if [[ $# -ne 2 ]]; then
 		echo "You are not supposed to run this function manually"
 		return

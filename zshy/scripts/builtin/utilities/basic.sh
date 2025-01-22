@@ -40,7 +40,7 @@ function utils:searchopt:usage() {
 # --------------------------------------------
 function debugmsg() {
   if [[ "$DEBUG" == "true" ]]; then
-    echo "zx: $*"
+    echo "zshy: $*"
   fi
 }
 

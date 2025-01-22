@@ -38,19 +38,24 @@ cp -rv zshy/* $ZSHY_HOME
 echo "The installer, to make life a bit easy for you, can create a 'bin' directory"
 echo "in your home directory and add it to your PATH. It would also create the"
 echo "'zshy' directory and the 'init.zsh' file inside it, if it does not exist."
+echo "This step will also create the extensions folder to install zshy extension scripts."
+echo ""
 read -k 1 "choice?Do you want to continue? [y/n] "
 echo ""
   
-binf="$HOME/bin/zshy"
-bininit="$binf/init.zsh"
+home_bin_zshy_dir="$HOME/bin/zshy"             # home_bin_zshy_dir = zshy directory inside the bin directory of user's HOME
+zshy_ext_dir="$home_bin_zshy_dir/extensions"   # zshy_ext_dir = bin extensions folder
+bininit="$home_bin_zshy_dir/init.zsh"
 
 if [[ $choice == "Y" || $choice == "y" ]]; then
   # We have to create the 'bin' directory and the 'zshy' directory in it
   create_bininit="no"
+  create_extdir="no"
+
   echo "You opted to create the $bininit file."
 
-  if [[ -d "$binf" ]]; then
-    echo "The directory $binf already exists."
+  if [[ -d "$home_bin_zshy_dir" ]]; then
+    echo "The directory $home_bin_zshy_dir already exists."
     echo -n "Checking for the 'init.zsh' file... "
     if [[ -f "$bininit" ]]; then
       echo "already exists"
@@ -58,14 +63,25 @@ if [[ $choice == "Y" || $choice == "y" ]]; then
       echo "does not exist"
       # We need to create the init file
       create_bininit="yes"
-  elif [[ -f "$binf" ]]; then
-    echo "The path $binf already exists but is a file."
+    fi
+    
+    echo -n "Checking for the extensions directory... "
+    if [[ -d "$zshy_ext_dir" ]]; then
+      echo "already exists"
+    else
+      echo "does not exist"
+      # We need to create the init file
+      create_extdir="yes"
+    fi
+  elif [[ -f "$home_bin_zshy_dir" ]]; then
+    echo "The path $home_bin_zshy_dir already exists but is a file."
   else
-    echo "The path $binf does not exist. Creating the directory..."
-    mkdir -p "$binf"
+    echo "The path $home_bin_zshy_dir does not exist. Creating the directory..."
+    mkdir -p "$home_bin_zshy_dir"
     if [[ $? -eq 0 ]]; then
       echo "Directory created successfully."
       create_bininit="yes"
+      create_extdir="yes"
     else
       echo "Failed to create directory."
     fi
@@ -84,12 +100,26 @@ if [[ $choice == "Y" || $choice == "y" ]]; then
       echo "...success"
     fi
   fi
+
+  if [[ $create_extdir == "yes" ]]; then
+    mkdir -p $zshy_ext_dir
+    if [ $? -ne 0 ]; then
+      echo "Creating the extensions directory failed!"
+    fi 
+  fi
 else
   echo "You opted to not create the $bininit file."
 fi  
 
 # Since this will work only on the next startup, for now, let's initialize the functions right now
 echo "Trying to enable the scripts right now."
+if [[ -v ZSHY_HOME ]]; then 
+  source $HOME/.zshrc
+else
+  echo "source $ZSHY_HOME/init.zsh" >> $HOME/.zshrc
+  source $ZSHY_HOME/init.zsh
+fi
+
 echo "For complete effect, please close this shell and start a new one"
-source $ZSHY_HOME/init.zsh
+
 
