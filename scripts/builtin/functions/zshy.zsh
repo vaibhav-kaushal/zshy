@@ -3,9 +3,9 @@
 function zshy() {
 	case $1 in
 	run)
-    if [[ $ZSHY_EXT_DIR == "" ]]; then
+    if [[ $ZSHY_EXT_HOME == "" ]]; then
       echo "Cannot run any extension."
-      __zshy_usage show_extensions_dir_creation_help
+      __zshy_usage $1 show_extensions_dir_creation_help
       return 1
     fi
 
@@ -13,13 +13,13 @@ function zshy() {
 		local funcdirpath
 		local funcfilepath
 		if [[ $# -eq 0 ]]; then
-			debugmsg "zshy r got no args"
+			debugmsg "zshy run got no args"
 			__zshy_usage "$0" "$1"
 			return
 		fi
 
-		funcdirpath="$ZSHY_EXT_HOME/installed/extensions/$1"
-		funcfilepath="$ZSHY_EXT_HOME/installed/extensions/$1/$1.zsh"
+		funcdirpath="$ZSHY_EXT_HOME/$1"
+		funcfilepath="$ZSHY_EXT_HOME/$1/$1.zsh"
 
 		# Check that the directory exists
 		if [ -e "$funcdirpath" ]; then
@@ -63,9 +63,9 @@ function zshy() {
 		fi
 		;;
 	install)
-    if [[ $ZSHY_EXT_DIR == "" ]]; then
+    if [[ $ZSHY_EXT_HOME == "" ]]; then
       echo "Cannot install any extension."
-      __zshy_usage show_extensions_dir_creation_help
+      __zshy_usage $1 show_extensions_dir_creation_help
       return 1
     fi
 
@@ -75,10 +75,10 @@ function zshy() {
 			echo "Supply git repo address please"
 		else
 			echo "Install directory is: $ZSHY_EXT_HOME"
-			echo "going to run 'git clone $1' in $ZSHY_EXT_HOME/installed/extensions"
+			echo "going to run 'git clone $1' in $ZSHY_EXT_HOME"
 
 			curr_dir=$(pwd)
-			cd $ZSHY_EXT_HOME/installed/extensions
+			cd $ZSHY_EXT_HOME
 			git clone $1
 			if [[ $? -ne 0 ]]; then
 				echo "looks like that failed"
@@ -92,20 +92,20 @@ function zshy() {
 			echo ""
 
 			if [[ $choice == "y" || $choice == "Y" ]]; then
-				cd $ZSHY_EXT_HOME/installed/extensions
+				cd $ZSHY_EXT_HOME
 				pr green "You should now 'cd' to the newly created directory and run 'rm -rf .git' there."
 				return 0
 			else
 				echo "You chose not to delete the .git directory from the newly created directory."
-				echo "If you do want to do that, remember the function are located here: $ZSHY_EXT_HOME/installed/extensions"
+				echo "If you do want to do that, remember the function are located here: $ZSHY_EXT_HOME"
 				cd $curr_dir
 			fi
 		fi
 		;; 
-	check)
-    if [[ $ZSHY_EXT_DIR == "" ]]; then
+  check)
+    if [[ $ZSHY_EXT_HOME == "" ]]; then
       echo "Cannot check for extension's existence!!"
-      __zshy_usage show_extensions_dir_creation_help
+      __zshy_usage $1 show_extensions_dir_creation_help
       return 1
     fi
 
@@ -118,8 +118,8 @@ function zshy() {
 			return
 		fi
 
-		funcdirpath="$ZSHY_EXT_HOME/installed/extensions/$1"
-		funcfilepath="$ZSHY_EXT_HOME/installed/extensions/$1/$1.zsh"
+		funcdirpath="$ZSHY_EXT_HOME/$1"
+		funcfilepath="$ZSHY_EXT_HOME/$1/$1.zsh"
 		# Check that the directory exists
 		if [ -e "$funcdirpath" ]; then
 		  # Must not be a symbolic link
@@ -156,18 +156,18 @@ function __zshy_usage() {
 	fi
 
 	case $2 in
-	r | run)
+	run)
 		echo "$1 $2 allows you run an extension installed by the user"
 		echo "Usage: $1 $2 program program_args"
 		echo "  The program is the name of the installed function"
 		;;
-	i | install)
+	install)
 		echo "$1 $2 allows you to install an extension in the extensions directory"
 		echo "Usage: $1 $2 repo_address"
 		echo "  The repo_address is a git repository address that is accessible from the current env"
 		echo "  Please ensure that you are able to access that repository."
 		;;
-	c | check)
+	check)
 	  echo "$1 $2 will test if the extension is installed or not (returns 0 if it is installed)"
 		echo "Usage $1 $2 ext_name "
 		echo "  The ext_name is the name of the extension which you want to check if it is installed"
