@@ -1,10 +1,10 @@
 #!/usr/bin/env zsh
 
+export ZSHY_HOME=${0:a:h}
+
 function resh () {
 	# echo "Running init script"
-	source $HOME/bin/zsh_scripts/init.zsh
+	source $ZSHY_HOME/scripts/init.zsh
 }
-
-alias refunc=resh
 
 resh

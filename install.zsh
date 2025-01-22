@@ -71,18 +71,25 @@ if [[ $choice == "Y" || $choice == "y" ]]; then
     fi
   fi
 
-  echo "Creating the file: $bininit"
-
-  echo "#!/usr/bin/env zsh\n\n" > "$bininit"
-  if [ $? -ne 0 ]; then
-    echo "Creating the $binf/init.zsh" file failed!
-  else
-    echo "...success"
+  if [[ $create_bininit == "yes" ]]; then
+    echo "Creating the file: $bininit"
+  
+    echo "#!/usr/bin/env zsh\n\n" > "$bininit"
+  
+    if [ $? -ne 0 ]; then
+      echo "Creating the $bininit file failed!"
+    else
+      echo "# Place your shell initialization instructions such as updates to your \$PATH, aliases," >> "$bininit"
+      echo "# custom functions etc. in this file. This file is source'd on each shell initialization\n\n" >> "$bininit"
+      echo "...success"
+    fi
   fi
 else
   echo "You opted to not create the $bininit file."
 fi  
 
 # Since this will work only on the next startup, for now, let's initialize the functions right now
-echo "Enabling functions right now. Please close this shell and start a new one"
-source $HOME/bin/bootup_zsh.sh
+echo "Trying to enable the scripts right now."
+echo "For complete effect, please close this shell and start a new one"
+source $ZSHY_HOME/init.zsh
+

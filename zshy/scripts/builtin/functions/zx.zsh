@@ -3,6 +3,12 @@
 function zx() {
 	case $1 in
 	r | run)
+    if [[ $ZSHY_EXT_DIR == "" ]]; then
+      echo "Cannot run any extension."
+      __zx_usage show_extensions_dir_creation_help
+      return 1
+    fi
+
 		shift
 		local funcdirpath
 		local funcfilepath
@@ -57,6 +63,12 @@ function zx() {
 		fi
 		;;
 	i | install)
+    if [[ $ZSHY_EXT_DIR == "" ]]; then
+      echo "Cannot install any extension."
+      __zx_usage show_extensions_dir_creation_help
+      return 1
+    fi
+
 		shift
 		local curr_dir
 		if [ -z "$1" ]; then
@@ -89,8 +101,14 @@ function zx() {
 				cd $curr_dir
 			fi
 		fi
-		;;
+		;; 
 	c | check)
+    if [[ $ZSHY_EXT_DIR == "" ]]; then
+      echo "Cannot check for extension's existence!!"
+      __zx_usage show_extensions_dir_creation_help
+      return 1
+    fi
+
 		shift
 		local funcdirpath
 		local funcfilepath
@@ -125,7 +143,7 @@ function zx() {
 		fi
 		;;
 	help | *)
-		echo "$0 helps you work with the Zsh eXtensions."
+		echo "$0 helps you work with the Zshy extensions."
 		;;
 	esac
 
@@ -154,6 +172,13 @@ function __zx_usage() {
 		echo "Usage $1 $2 ext_name "
 		echo "  The ext_name is the name of the extension which you want to check if it is installed"
 		;;
+  show_extensions_dir_creation_help)
+    echo "The zshy extensions directory was not found."
+    echo "To create the directory and enable related functionality, run the following commands:"
+    echo "mkdir -p $HOME/bin/zshy/extensions"
+    echo "source $HOME/.zshrc"
+    echo ""
+    ;;
 	*)
 		echo "You are not supposed to call this function manually"
 		;;
