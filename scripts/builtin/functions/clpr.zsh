@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-function pr () {
+function clclpr () {
 	if [ $# -lt 1 ]; then
 		echo "$0 needs at least 1 argument."
 		return 0
@@ -239,18 +239,18 @@ function pr () {
 	esac
 }
 
-function pr_oneliner () {
-	echo "pr: Print utility for ZSH!!"
+function clpr_oneliner () {
+	echo "clpr: Color Print utility for ZSH!!"
 }
 
-function pr_help() {
+function clpr_help() {
 	echo "This tool prints a line of message in a given color\n"
 	echo "Usage: "
 	echo ""
-	echo "pr [--no-newline] [bgcolor [fgcolor [bold]]] msg1 [...msg]"
+	echo "clpr [--no-newline] [bgcolor [fgcolor [bold]]] msg1 [...msg]"
 	echo ""
 	echo "The '--no-newline' option suppresses the newline at the end of the printed message"
-	echo "   By default (without this option) pr will print the message with a newline"
+	echo "   By default (without this option) clpr will print the message with a newline"
 	echo "   at the end of the message"
 	echo ""
 	echo "The options bgcolor, fgcolor and bold change the style of printed message"
@@ -279,14 +279,14 @@ function pr_help() {
 	echo "NOTE: Any other color name will set the color to the default terminal color."
 	echo "Examples:"
 	echo ""
-	echo "% pr Vaibhav # No color specified"
-	pr Vaibhav
-	echo "% pr blue Vaibhav"
-	pr blue Vaibhav
-	echo "% pr blue yellow Vaibhav"
-	pr blue yellow Vaibhav
-	echo "% pr blue yellow bold Vaibhav"
+	echo "% clpr Vaibhav # No color specified"
+	clpr Vaibhav
+	echo "% clpr blue Vaibhav"
+	clpr blue Vaibhav
+	echo "% clpr blue yellow Vaibhav"
+	clpr blue yellow Vaibhav
+	echo "% clpr blue yellow bold Vaibhav"
 	blue yellow bold Vaibhav
-	echo "% pr blue yellow bold vaibhav kaushal"
-	pr blue yellow bold vaibhav kaushal
+	echo "% clpr blue yellow bold vaibhav kaushal"
+	clpr blue yellow bold vaibhav kaushal
 }

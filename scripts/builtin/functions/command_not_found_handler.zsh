@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 function command_not_found_handler() {
-  if zshy c $1; then
+  if zshy check $1; then
     debugmsg "$1 is installed as a zshy extension"
     zshy run $*
   else

@@ -86,14 +86,14 @@ function zshy() {
 				return 1
 			fi
 
-			pr magenta "You should remove the .git folder from the newly created folder."
-			pr blue --no-newline "Do you want to remove the .git folder from the target directory? [y/n] "
+			clpr magenta "You should remove the .git folder from the newly created folder."
+			clpr blue --no-newline "Do you want to remove the .git folder from the target directory? [y/n] "
 			read -k 1 choice
 			echo ""
 
 			if [[ $choice == "y" || $choice == "Y" ]]; then
 				cd $ZSHY_EXT_HOME
-				pr green "You should now 'cd' to the newly created directory and run 'rm -rf .git' there."
+				clpr green "You should now 'cd' to the newly created directory and run 'rm -rf .git' there."
 				return 0
 			else
 				echo "You chose not to delete the .git directory from the newly created directory."

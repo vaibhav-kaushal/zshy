@@ -2,7 +2,7 @@
 
 function bg() {
 	if [[ $# -eq 0 ]]; then
-		pr red "No argument supplied. ${funcstack[1]} needs a command to run"
+		clpr red "No argument supplied. ${funcstack[1]} needs a command to run"
 		return 0
 	fi
 
@@ -14,8 +14,8 @@ function bg_oneliner() {
 }
 
 function bg_help() {
-	pr blue "usage:"
-	pr default "bg <command>"
-	pr default ""
-	pr default "Runs the given command in background using '1>/dev/null 2>/dev/null &'"
+	clpr blue "usage:"
+	clpr default "bg <command>"
+	clpr default ""
+	clpr default "Runs the given command in background using '1>/dev/null 2>/dev/null &'"
 }

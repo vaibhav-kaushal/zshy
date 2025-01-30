@@ -306,17 +306,17 @@ function string() {
 			string:beginsWith:help "defence against accidental call"
 			;;
 		help)
-			pr blue "The following commands are available:"
-			pr default "${funcstack[1]} joinby|j   Uses 1st character of 1st arg as separator to join rest of the args"
-			pr default "${funcstack[1]} length|l   Calculates the length of the string supplied and PRINTS it"
-			pr default "${funcstack[1]} lower      Converts the argument to loweracse letters"
-			pr default "${funcstack[1]} upper      Converts the argument to UPPERCASE letters"
-			pr default "${funcstack[1]} reverse|r  Reverses the string supplied to it"
-			pr default "${funcstack[1]} beginsWith Checks if a string begins with another string"
-			pr default "${funcstack[1]} random     Returns a random string according to given arguments"
+			clpr blue "The following commands are available:"
+			clpr default "${funcstack[1]} joinby|j   Uses 1st character of 1st arg as separator to join rest of the args"
+			clpr default "${funcstack[1]} length|l   Calculates the length of the string supplied and PRINTS it"
+			clpr default "${funcstack[1]} lower      Converts the argument to loweracse letters"
+			clpr default "${funcstack[1]} upper      Converts the argument to UPPERCASE letters"
+			clpr default "${funcstack[1]} reverse|r  Reverses the string supplied to it"
+			clpr default "${funcstack[1]} beginsWith Checks if a string begins with another string"
+			clpr default "${funcstack[1]} random     Returns a random string according to given arguments"
 			;;
 		*)
-			pr red "Unrecognized command. Run '${funcstack[1]} help' to get help"
+			clpr red "Unrecognized command. Run '${funcstack[1]} help' to get help"
 			return 100
 			;;
 	esac
@@ -545,7 +545,7 @@ function string:random:help() {
 	echo "allchars   - alphanumeric + special character sets"
 	echo ""
 	echo "Example:"
-	pr blue '% string random alphanumeric 15'
+	clpr blue '% string random alphanumeric 15'
 	echo $(string random alphanumeric 15)
 }
 

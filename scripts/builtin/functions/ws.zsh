@@ -3,7 +3,7 @@
 function ws() {
 	local input
 	if [ $# -lt 1 ]; then
-		pr --no-newline blue "What do you want to search the web for? Input: "
+		clpr --no-newline blue "What do you want to search the web for? Input: "
 		#return 1
 		read -r input
 	else

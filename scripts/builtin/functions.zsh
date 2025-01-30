@@ -29,7 +29,7 @@ done
 # Prints help about the available functions
 function helpme() {
 	
-	pr default "\nRun 'utilities_help' to learn about available utilities."
+	clpr default "\nRun 'utilities_help' to learn about available utilities."
 
 	# Detect custom functions help
 	local type_func_location=$(type ${funcstack[1]})
@@ -56,7 +56,7 @@ function helpme() {
 
 				echo "$(type ${${filename##*/}:0:-4}_help)" | grep "shell function from" > /dev/null
 				if [[ $? -eq 0 ]]; then
-					pr blue white "]>==>) Run ${${filename##*/}:0:-4}_help to get more help"
+					clpr blue white "]>==>) Run ${${filename##*/}:0:-4}_help to get more help"
 					echo ""
 				fi
 			else

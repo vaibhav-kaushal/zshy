@@ -18,6 +18,6 @@
 ###########################################################
 
 # To check if the scripts have been installed.
-export QWERTY_UIOP="ASDFGHJKL"
+export DEBUG_ZSHY="true"
 export PATH=$HOME/bin:$PATH
 

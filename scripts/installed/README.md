@@ -1,1 +1,0 @@
-# About this directory - installed scripts
